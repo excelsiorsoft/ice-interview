@@ -1,6 +1,8 @@
 package com.excelsiorsoft.findingsum;
 
 import static com.excelsiorsoft.findingsum.DistinctPairsFinder.findSummingPairs;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -89,6 +91,18 @@ public class DistinctPairsFinderTest {
 		findSummingPairs(array, sum);
 	}
 	
+	@Test
+	public void testOneMoreThanMaxSumValue() {
+		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
+		int sum = array[array.length-1]+array[array.length-2]+1;
+		shuffle(array);
+		Throwable thrown = catchThrowable(() -> {
+			findSummingPairs(array, sum);
+		});
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class).hasNoCause()
+				.hasStackTraceContaining("Sought for sum is too large.  Won't even look...");
+	}
+	
 	
 	@Test
 	public void testMinSumValue() {
@@ -96,6 +110,19 @@ public class DistinctPairsFinderTest {
 		int sum = array[0]+array[1];
 		shuffle(array);
 		findSummingPairs(array, sum);
+	}
+	
+	@Test
+	public void testOneLessThanMinSumValue() {
+		int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+		int sum = array[0] + array[1] - 1;
+		shuffle(array);
+		Throwable thrown = catchThrowable(() -> {
+			findSummingPairs(array, sum);
+		});
+		assertThat(thrown).isInstanceOf(IllegalArgumentException.class).hasNoCause()
+				.hasStackTraceContaining("Sought for sum is too small.  Won't even look...");
+		
 	}
 	
 	

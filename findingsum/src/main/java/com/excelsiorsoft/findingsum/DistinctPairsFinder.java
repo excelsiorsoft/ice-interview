@@ -54,6 +54,7 @@ public final class DistinctPairsFinder {
 	public static void findSummingPairs(int[] data, int sum){
 		int[] sorted = data.clone();
 		sort(sorted);
+		validate(sorted, sum);
 		
 		Set<Pair> collected = new HashSet<>();
 		
@@ -85,5 +86,23 @@ public final class DistinctPairsFinder {
 		//Arrays.stream(sorted).forEach(e -> System.out.print(e + " "));
 		
 }
+
+	private static void validate(int[] sorted, int sum) {
+		long min = 0;
+		long max = 0;
+		
+		int first = sorted[0];
+		int second = sorted[1];
+		
+		int last = sorted[sorted.length-1];
+		int nextToLast = sorted[sorted.length-2];
+		
+		min = first+second;
+		max = nextToLast+last;
+		
+		if(sum<min)throw new IllegalArgumentException("Sought for sum is too small.  Won't even look...");
+		if(sum>max)throw new IllegalArgumentException("Sought for sum is too large.  Won't even look...");
+		
+	}
 
 }
