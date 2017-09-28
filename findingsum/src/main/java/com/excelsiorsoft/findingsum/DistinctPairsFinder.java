@@ -14,7 +14,11 @@ import java.util.Set;
  */
 public final class DistinctPairsFinder {
 	
-	 final static class Pair{
+	 /**
+	 * @author Simeon
+	 *
+	 */
+	final static class Pair{
 		
 
 		int a;
@@ -51,31 +55,31 @@ public final class DistinctPairsFinder {
 		}
 	}
 	
+	/**
+	 * @param data
+	 * @param sum
+	 */
 	public static void findSummingPairs(int[] data, int sum){
-		int[] sorted = data.clone();
-		sort(sorted);
-		validate(sorted, sum);
+		
+		int[] sorted = validate(data, sum);
 		
 		Set<Pair> collected = new HashSet<>();
 		
 		int lo = 0;
 		int hi = sorted.length-1;
 		
-		while(lo != hi) {
-		System.out.println("low="+lo +", hi="+hi+"; sorted[lo]+sorted[hi]="+(sorted[lo]+sorted[hi]));
-		
-		if(sorted[lo]+sorted[hi]>sum) {
-			hi -= 1;
-			//System.out.println("low="+lo +", hi="+hi);
-		}else if(sorted[lo]+sorted[hi]<sum) {
-			lo += 1;
-			//System.out.println("low="+lo +", hi="+hi);
-		}else if(sorted[lo]+sorted[hi]==sum) {
-			collected.add(new Pair(sorted[lo], sorted[hi]));
-			hi -= 1;
-		}
-		
-		
+		while (lo != hi) {
+			System.out.println("low=" + lo + ", hi=" + hi + "; sorted[lo]+sorted[hi]=" + (sorted[lo] + sorted[hi]));
+
+			if (sorted[lo] + sorted[hi] > sum) {
+				hi -= 1;
+			} else if (sorted[lo] + sorted[hi] < sum) {
+				lo += 1;
+			} else if (sorted[lo] + sorted[hi] == sum) {
+				collected.add(new Pair(sorted[lo], sorted[hi]));
+				hi -= 1;
+			}
+
 		}
 		
 		if(collected.size()>0) {
@@ -87,7 +91,11 @@ public final class DistinctPairsFinder {
 		
 }
 
-	private static void validate(int[] sorted, int sum) {
+	private static int[] validate(int[] data, int sum) {
+		
+		int[] sorted = data.clone();
+		sort(sorted);
+		
 		long min = 0;
 		long max = 0;
 		
@@ -103,6 +111,7 @@ public final class DistinctPairsFinder {
 		if(sum<min)throw new IllegalArgumentException("Sought for sum is too small.  Won't even look...");
 		if(sum>max)throw new IllegalArgumentException("Sought for sum is too large.  Won't even look...");
 		
+		return sorted;
 	}
 
 }
