@@ -88,7 +88,7 @@ public final class DistinctPairsFinder {
 		if(collected.size()>0) {
 			int size = collected.size();
 			System.out.println("Found "+size+(size>1?" pairs":" pair"));
-		collected.stream().forEach(System.out::print);
+			collected.stream().forEach(System.out::print);
 		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
 		//Arrays.stream(sorted).forEach(e -> System.out.print(e + " "));
 		return collected;
@@ -114,8 +114,8 @@ public final class DistinctPairsFinder {
 		min = first+second;
 		max = nextToLast+last;
 		
-		if(sum<min)throw new IllegalArgumentException("Sought for sum is too small.  Won't even look...");
-		if(sum>max)throw new IllegalArgumentException("Sought for sum is too large.  Won't even look...");
+		if(sum < min)throw new IllegalArgumentException("Sought for sum is too small.  Won't even look...");
+		if(sum > max)throw new IllegalArgumentException("Sought for sum is too large.  Won't even look...");
 		
 		return sorted;
 	}
