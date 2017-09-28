@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.excelsiorsoft.findingsum.DistinctPairsFinder.Pair;
@@ -214,24 +215,25 @@ public class DistinctPairsFinderTest {
 	
 	
 	@Test
+	//@Ignore
 	public void testLargeRandomCombination() {
 		Random random = new Random();
-		int[] array = random.ints(10_000_000, Integer.MIN_VALUE, Integer.MAX_VALUE).toArray();
+		int[] array = random.ints(10_000_000, Integer.MIN_VALUE/2, Integer.MAX_VALUE/2).toArray();
 		int[] sorted = array.clone();
 		Arrays.sort(sorted);
-		long first = sorted[0];
-		long second = sorted[1];
-		long nextToLast = sorted[sorted.length-2];
-		long last = sorted[sorted.length-1];
-		long min = first+second;
-		long max = nextToLast+last;
+		int first = sorted[0];
+		int second = sorted[1];
+		int nextToLast = sorted[sorted.length-2];
+		int last = sorted[sorted.length-1];
+		int min = first+second;
+		int max = nextToLast+last;
 		
-		long sum = min + 
-                (long)(random.nextDouble()*(max - min));
-		
+		int sum = min + 
+                (random.nextInt()*(max - min));
+		System.out.println("sum="+sum+", min="+min);
 		//int sum = 18274;
 		Stopwatch stopwatch = Stopwatch.createStarted();
-		findSummingPairs(array, (int)sum);
+		findSummingPairs(array, sum);
 		System.out.println("\nRandom expected sum="+sum);
 		System.out.println("\nTook "+stopwatch.elapsed().getSeconds()+" seconds");
 
@@ -255,6 +257,15 @@ public class DistinctPairsFinderTest {
 	      array[i] = a;
 	    }
 	  }
+	
+	@Test public void randomInaRange() {
+		long LOWER_RANGE = -1000000; //assign lower range value
+		 long UPPER_RANGE = 1000000; //assign upper range value
+		 Random random = new Random();
+		 long randomValue = LOWER_RANGE + 
+		                 (long)(random.nextDouble()*(UPPER_RANGE - LOWER_RANGE));
+		 System.out.println(randomValue);
+	}
 	
 
 }

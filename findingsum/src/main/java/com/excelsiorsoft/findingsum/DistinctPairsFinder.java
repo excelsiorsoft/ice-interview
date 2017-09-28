@@ -5,6 +5,7 @@ package com.excelsiorsoft.findingsum;
 
 import static java.util.Arrays.sort;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,8 +35,8 @@ public final class DistinctPairsFinder {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + a;
-			result = prime * result + b;
+			result = prime * result + a*b;
+			//result = prime * result + b;
 			return result;
 		}
 
@@ -45,9 +46,13 @@ public final class DistinctPairsFinder {
 			if (obj == null || getClass() != obj.getClass()) return false;
 			
 			Pair other = (Pair) obj;
-			if (a != other.a) return false;
+			/*if (a != other.a) return false;
 			if (b != other.b) return false;
-			return true;
+			return true;*/
+			if ((a == other.a) && (b == other.b)) {return true;}
+			else if ((a == other.b) && (b == other.a)) {return true;}
+			else {return false;}
+			
 		}
 		
 		@Override
@@ -57,7 +62,7 @@ public final class DistinctPairsFinder {
 	}
 	
 	/**
-	 * The workhorse method
+	 * The workhorse method, O(NlogN) due to sorting
 	 * 
 	 * @param data an array of integers
 	 * @param sum a sought for sum
@@ -72,7 +77,7 @@ public final class DistinctPairsFinder {
 		int hi = sorted.length-1;
 		
 		while (lo != hi) {
-			System.out.println("low=" + lo + ", hi=" + hi + "; sorted[lo]+sorted[hi]=" + (sorted[lo] + sorted[hi]));
+			//System.out.println("low=" + lo + ", hi=" + hi + "; sorted[lo]+sorted[hi]=" + (sorted[lo] + sorted[hi]));
 
 			if (sorted[lo] + sorted[hi] > sum) {
 				hi -= 1;
@@ -88,7 +93,7 @@ public final class DistinctPairsFinder {
 		if(collected.size()>0) {
 			int size = collected.size();
 			System.out.println("Found "+size+(size>1?" pairs":" pair"));
-			collected.stream().forEach(System.out::print);
+			//collected.stream().forEach(System.out::print);
 		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
 		//Arrays.stream(sorted).forEach(e -> System.out.print(e + " "));
 		return collected;
@@ -118,6 +123,34 @@ public final class DistinctPairsFinder {
 		if(sum > max)throw new IllegalArgumentException("Sought for sum is too large.  Won't even look...");
 		
 		return sorted;
+	}
+	
+	/**
+	 * Faster workhorse, O(N) via elimination of sorting at the expense of extra space 
+	 * 
+	 * @param data
+	 * @param sum
+	 * @return
+	 */
+	public static Set<Pair> findSummingPairsLookAhead(int[] data, int sum){
+		Set<Pair> collected = new HashSet<>();
+		Set<Integer> lookaheads = new HashSet<>();
+		
+		
+		for(int i = 0; i < data.length; i++) {
+			int elem = data[i];
+			if(lookaheads.contains(elem)) {
+				collected.add(new Pair(elem, sum - elem));
+			}
+			lookaheads.add(sum - elem);
+		}
+		
+		if(collected.size()>0) {
+			int size = collected.size();
+			System.out.println("Found "+size+(size>1?" pairs":" pair"));
+			collected.stream().forEach(System.out::print);
+		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
+		return collected;
 	}
 
 }
