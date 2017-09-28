@@ -9,16 +9,31 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.excelsiorsoft.findingsum.DistinctPairsFinder.Pair;
 import com.google.common.base.Stopwatch;
 
 public class DistinctPairsFinderTest {
 
 	
+
+	
+	@Test
+	public void testMirrorArray() {
+		int[] array = {16, 9, 7, 1, -16, -9, -7, -1 };
+		int sum = 0;
+		assertThat(findSummingPairs(array, sum))
+			.hasSize(4)
+			.contains(new Pair(-16, 16))
+			.contains(new Pair(-9, 9))
+			.contains(new Pair(-1, 1))
+			.contains(new Pair(-7, 7));
+	}
+	
 	@Test
 	public void testSinglePresentPair() {
 		int[] array = {16,9,7,1};
 		int sum = 8;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum)).hasSize(1).contains(new Pair(1,7));
 	}
 	
 	
@@ -27,15 +42,19 @@ public class DistinctPairsFinderTest {
 	public void testMissingPairs() {
 		int[] array = {1,2,3,9};
 		int sum = 8;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum)).hasSize(0);
 	}
 	
 	
 	@Test
 	public void testMultiplePresentPair() {
-		int[] array = {1,2,3,4,5,6};
+		int[] array = { 1, 2, 3, 4, 5, 6 };
 		int sum = 7;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+			.hasSize(3)
+			.contains(new Pair(3, 4))
+			.contains(new Pair(2, 5))
+			.contains(new Pair(1, 6));
 	}
 	
 	
@@ -43,7 +62,13 @@ public class DistinctPairsFinderTest {
 	public void testLargerMultiplePresentPairGauss() {
 		int[] array = {1,2,3,4,5,6,7,8,9,10};
 		int sum = 11;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum)).
+		hasSize(5)
+		.contains(new Pair(5,6))
+		.contains(new Pair(4,7))
+		.contains(new Pair(3,8))
+		.contains(new Pair(2,9))
+		.contains(new Pair(1,10));
 	}
 	
 	
@@ -52,7 +77,13 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
 		shuffle(array);
 		int sum = 12;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(5)
+		.contains(new Pair(5,7))
+		.contains(new Pair(4,8))
+		.contains(new Pair(3,9))
+		.contains(new Pair(2,10))
+		.contains(new Pair(1,11));
 	}
 	
 	
@@ -61,7 +92,11 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
 		shuffle(array);
 		int sum = 7;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(3)
+		.contains(new Pair(3,4))
+		.contains(new Pair(2,5))
+		.contains(new Pair(1,6));
 	}
 	
 	
@@ -70,7 +105,12 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
 		shuffle(array);
 		int sum = 15;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(4)
+		.contains(new Pair(7,8))
+		.contains(new Pair(6,9))
+		.contains(new Pair(5,10))
+		.contains(new Pair(4,11));
 	}
 	
 	
@@ -88,7 +128,9 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
 		int sum = array[array.length-1]+array[array.length-2];
 		shuffle(array);
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(1)
+		.contains(new Pair(10,11));
 	}
 	
 	@Test
@@ -109,7 +151,9 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10,11};
 		int sum = array[0]+array[1];
 		shuffle(array);
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(1)
+		.contains(new Pair(1,2));
 	}
 	
 	@Test
@@ -131,7 +175,13 @@ public class DistinctPairsFinderTest {
 		int[] array = {1,2,3,4,5,6,7,8,9,10};
 		shuffle(array);
 		int sum = 11;
-		findSummingPairs(array, sum);
+		assertThat(findSummingPairs(array, sum))
+		.hasSize(5)
+		.contains(new Pair(5,6))
+		.contains(new Pair(4,7))
+		.contains(new Pair(3,8))
+		.contains(new Pair(2,9))
+		.contains(new Pair(1,10));
 	}
 	
 	

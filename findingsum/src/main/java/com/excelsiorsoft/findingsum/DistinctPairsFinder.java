@@ -59,7 +59,7 @@ public final class DistinctPairsFinder {
 	 * @param data
 	 * @param sum
 	 */
-	public static void findSummingPairs(int[] data, int sum){
+	public static Set<Pair> findSummingPairs(int[] data, int sum){
 		
 		int[] sorted = validate(data, sum);
 		
@@ -88,10 +88,13 @@ public final class DistinctPairsFinder {
 		collected.stream().forEach(System.out::print);
 		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
 		//Arrays.stream(sorted).forEach(e -> System.out.print(e + " "));
+		return collected;
 		
 }
 
 	private static int[] validate(int[] data, int sum) {
+		if(data == null) throw new IllegalArgumentException("Data array is not provided - nothing to search against.  Exiting...");
+		//if(sum == 0) throw new IllegalArgumentException("Requested sum value is not provided - incomplete data to start a search.  Exiting...");
 		
 		int[] sorted = data.clone();
 		sort(sorted);
