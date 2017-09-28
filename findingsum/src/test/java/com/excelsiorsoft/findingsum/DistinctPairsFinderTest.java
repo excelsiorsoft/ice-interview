@@ -188,7 +188,6 @@ public class DistinctPairsFinderTest {
 	@Test
 	public void testRandomCombination() {
 		int[] array = new Random().ints(100, 0, 1000).toArray();
-		//shuffle(array);
 		int sum = 305;
 		findSummingPairs(array, sum);
 	}
@@ -197,7 +196,6 @@ public class DistinctPairsFinderTest {
 	public void testRandomCombinationWithNegatives() {
 		int[] array = new Random().ints(100, -1000, 1000).toArray();
 		Arrays.stream(array).forEach(e -> System.out.print(e + " "));
-		//shuffle(array);
 		int sum = -305;
 		findSummingPairs(array, sum);
 		

@@ -15,11 +15,12 @@ import java.util.Set;
 public final class DistinctPairsFinder {
 	
 	 /**
+	  * This class encapsulate the resulting tuple
+	  * 
 	 * @author Simeon
 	 *
 	 */
 	final static class Pair{
-		
 
 		int a;
 		int b;
@@ -56,8 +57,10 @@ public final class DistinctPairsFinder {
 	}
 	
 	/**
-	 * @param data
-	 * @param sum
+	 * The workhorse method
+	 * 
+	 * @param data an array of integers
+	 * @param sum a sought for sum
 	 */
 	public static Set<Pair> findSummingPairs(int[] data, int sum){
 		
