@@ -57,6 +57,17 @@ public class DistinctPairsFinderTest {
 			.contains(new Pair(1, 6));
 	}
 	
+	@Test
+	public void testMultiplePresentPairDoubled() {
+		int[] array = { 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6 };
+		int sum = 7;
+		assertThat(findSummingPairs(array, sum))
+			.hasSize(3)
+			.contains(new Pair(3, 4))
+			.contains(new Pair(2, 5))
+			.contains(new Pair(1, 6));
+	}
+	
 	
 	@Test
 	public void testLargerMultiplePresentPairGauss() {
