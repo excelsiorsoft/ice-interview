@@ -2,7 +2,6 @@ package com.excelsiorsoft.findingsum;
 
 import static com.excelsiorsoft.findingsum.DistinctPairsFinder.findSummingPairs;
 
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -130,11 +129,24 @@ public class DistinctPairsFinderTest {
 	
 	@Test
 	public void testLargeRandomCombination() {
-		int[] array = new Random().ints(10_000_000, Integer.MIN_VALUE, Integer.MAX_VALUE).toArray();
-		//shuffle(array);
-		int sum = 18274;
+		Random random = new Random();
+		int[] array = random.ints(10_000_000, Integer.MIN_VALUE, Integer.MAX_VALUE).toArray();
+		int[] sorted = array.clone();
+		Arrays.sort(sorted);
+		long first = sorted[0];
+		long second = sorted[1];
+		long nextToLast = sorted[sorted.length-2];
+		long last = sorted[sorted.length-1];
+		long min = first+second;
+		long max = nextToLast+last;
+		
+		long sum = min + 
+                (long)(random.nextDouble()*(max - min));
+		
+		//int sum = 18274;
 		Stopwatch stopwatch = Stopwatch.createStarted();
-		findSummingPairs(array, sum);
+		findSummingPairs(array, (int)sum);
+		System.out.println("\nRandom expected sum="+sum);
 		System.out.println("\nTook "+stopwatch.elapsed().getSeconds()+" seconds");
 
 	}
