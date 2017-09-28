@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.excelsiorsoft.findingsum.DistinctPairsFinder.Pair;
@@ -221,6 +222,7 @@ public class DistinctPairsFinderLookAheadTest {
 	
 	
 	@Test
+	@Ignore //resource intensive, better run on its own
 	public void testLargeRandomCombination() {
 		Random random = new Random();
 		int[] array = random.ints(10_000_000, Integer.MIN_VALUE/2, Integer.MAX_VALUE/2).toArray();

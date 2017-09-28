@@ -215,7 +215,7 @@ public class DistinctPairsFinderTest {
 	
 	
 	@Test
-	//@Ignore
+	@Ignore //better run on its own 
 	public void testLargeRandomCombination() {
 		Random random = new Random();
 		int[] array = random.ints(10_000_000, Integer.MIN_VALUE/2, Integer.MAX_VALUE/2).toArray();

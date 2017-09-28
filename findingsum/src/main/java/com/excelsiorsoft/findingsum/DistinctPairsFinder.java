@@ -35,7 +35,7 @@ public final class DistinctPairsFinder {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + a*b;
+			result = (int) (prime * result + Math.sqrt(a+b));
 			//result = prime * result + b;
 			return result;
 		}
@@ -95,7 +95,6 @@ public final class DistinctPairsFinder {
 			System.out.println("Found "+size+(size>1?" pairs":" pair"));
 			//collected.stream().forEach(System.out::print);
 		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
-		//Arrays.stream(sorted).forEach(e -> System.out.print(e + " "));
 		return collected;
 		
 }
@@ -126,15 +125,15 @@ public final class DistinctPairsFinder {
 	}
 	
 	/**
-	 * Faster workhorse, O(N) via elimination of sorting at the expense of extra space 
+	 * Another workhorse, O(N) via elimination of sorting at the expense of extra space 
 	 * 
 	 * @param data
 	 * @param sum
 	 * @return
 	 */
 	public static Set<Pair> findSummingPairsLookAhead(int[] data, int sum){
-		Set<Pair> collected = new HashSet<>();
-		Set<Integer> lookaheads = new HashSet<>();
+		Set<Pair> collected = new HashSet<>(data.length);
+		Set<Integer> lookaheads = new HashSet<>(data.length);
 		
 		
 		for(int i = 0; i < data.length; i++) {
@@ -148,7 +147,7 @@ public final class DistinctPairsFinder {
 		if(collected.size()>0) {
 			int size = collected.size();
 			System.out.println("Found "+size+(size>1?" pairs":" pair"));
-			collected.stream().forEach(System.out::print);
+			//collected.stream().forEach(System.out::print);
 		}else {System.out.println("Couldn't find any pairs...  Try another set of inputs.");}
 		return collected;
 	}
