@@ -34,4 +34,14 @@ public class AnagramFinderTest {
 		
 	}
 
+	@Test
+	public void test4() {
+		String text = "“apt”, “tap” and “pat”";
+		AnagramFinder.findAsList(new StringReader(text)).stream().forEach(System.out::println);
+		System.out.println("-------------------");
+		AnagramFinder.findAsMap(new StringReader(text)).entrySet().forEach(System.out::println);
+		
+	}
+	
+	
 }
