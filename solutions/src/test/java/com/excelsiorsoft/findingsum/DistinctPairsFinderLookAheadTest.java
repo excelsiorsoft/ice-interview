@@ -20,7 +20,9 @@ public class DistinctPairsFinderLookAheadTest {
 		Pair _34 = new Pair(3,4);
 		Pair _43 = new Pair(4,3);
 		assertTrue(_34.equals(_43));
-		assertTrue(_34.hashCode()==_43.hashCode());
+		for(int i=0;i<20;i++) {
+			assertTrue(_34.hashCode()==_43.hashCode());
+		}
 		
 	}
 
