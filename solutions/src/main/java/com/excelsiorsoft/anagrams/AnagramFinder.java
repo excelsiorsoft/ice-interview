@@ -20,24 +20,22 @@ import java.util.stream.Stream;
 public class AnagramFinder {
 
 	public static List<Set<String>> findAsList(Reader text) {
-		
-		Map<String, Set<String>> preliminaries =  new BufferedReader(text).lines().flatMap(Pattern.compile("\\W+")::splitAsStream).distinct()
-				.collect(Collectors.groupingBy(s->Stream.of(s.split("")).sorted().collect(Collectors.joining()), Collectors.toSet()));
-				
-				return preliminaries.values().stream().filter(list -> list.size() > 1).collect(Collectors.toList());
+
+		Map<String, Set<String>> preliminaries = new BufferedReader(text).lines()
+				.flatMap(Pattern.compile("\\W+")::splitAsStream).distinct().collect(Collectors.groupingBy(
+						s -> Stream.of(s.split("")).sorted().collect(Collectors.joining()), Collectors.toSet()));
+
+		return preliminaries.values().stream().filter(list -> list.size() > 1).collect(Collectors.toList());
 	}
 	
-public static Map<String, Set<String>> findAsMap(Reader text) {
-		
-	Map<String, List<String>> preliminaries =  new BufferedReader(text).lines().flatMap(Pattern.compile("\\W+")::splitAsStream).distinct()
-		.collect(Collectors.groupingBy(s->Stream.of(s.split("")).sorted().collect(Collectors.joining())));
-		
-		//preliminaries.values().stream().filter(list -> list.size() > 1).collect(Collectors.toList())
-		
-		return preliminaries.values().stream()
-			       .filter(list -> list.size() > 1)
-			       .collect(Collectors.toMap(list -> list.get(0), 
-			                                 list -> new TreeSet<>(list.subList(1, list.size()))));
+	public static Map<String, Set<String>> findAsMap(Reader text) {
+
+		Map<String, List<String>> preliminaries = new BufferedReader(text).lines()
+				.flatMap(Pattern.compile("\\W+")::splitAsStream).distinct()
+				.collect(Collectors.groupingBy(s -> Stream.of(s.split("")).sorted().collect(Collectors.joining())));
+
+		return preliminaries.values().stream().filter(list -> list.size() > 1)
+				.collect(Collectors.toMap(list -> list.get(0), list -> new TreeSet<>(list.subList(1, list.size()))));
 	}
 
 }
