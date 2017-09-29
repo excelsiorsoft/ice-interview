@@ -24,5 +24,14 @@ public class AnagramFinderTest {
 		String text = "abc cab tat aaa\natt tat bbb\ntta\ncabr\nrbac cab crab cabrc cabr";
 		AnagramFinder.findAsList(new StringReader(text)).stream().forEach(System.out::println);
 	}
+	
+	@Test
+	public void test3() {
+		String text = "cat, dog, tac, god,   act, gdo";
+		AnagramFinder.findAsList(new StringReader(text)).stream().forEach(System.out::println);
+		System.out.println("-------------------");
+		AnagramFinder.findAsMap(new StringReader(text)).entrySet().forEach(System.out::println);
+		
+	}
 
 }
