@@ -2,8 +2,12 @@ package com.excelsiorsoft.anagrams;
 
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,7 +29,7 @@ public class AnagramFinderTest {
 	
 	@Test
 	public void test2() {
-		String text = "abc cab tat aaa\natt tat bbb\ntta\ncabr\nrbac cab crab cabrc cabr";
+		String text = "abc cab tat aaa orchestra\natt tat bbb\ntta\ncabr\nrbac cab crab cabrc cabr carthorse";
 		AnagramFinder.findAsList(new StringReader(text)).stream().forEach(System.out::println);
 	}
 	
@@ -58,7 +62,7 @@ public class AnagramFinderTest {
 	
 	@Test
 	public void test6() {
-		String text = "salt last one eon plod barc \ncrab";
+		String text = "salt last one orchestra  eon plod barc \ncrab carthorse";
 		
 		new BufferedReader(new StringReader(text)).lines()
 		.flatMap(Pattern.compile("\\W+")::splitAsStream).distinct()
@@ -90,8 +94,48 @@ public class AnagramFinderTest {
 		System.out.println("salt".codePoints().sorted().collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString());
 	}
 	
+	@Test
+	public void test8() {
+		
+		System.out.println( calculateProduct("Pneumonoultramicroscopicsilicovolcanoconiosis".toUpperCase().toCharArray()) );
+	}
+	
+	@Test public void test9() {
+		
+		assertThat(calculateProduct(capitalize("carthorse"))).isEqualTo(calculateProduct(capitalize("orchestra")));
+		
+	}
 	
 	
+	private char[] capitalize(String word) {
+		return word.toUpperCase().toCharArray();
+	}
+	
+	private BigInteger calculateProduct(char[] letters) {
+		
+		/*int[] primes = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31,
+		        37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103,
+		        107, 109, 113 };*/
+		
+		BigInteger[] bigPrimes = Arrays.stream(
+				new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31,
+		        37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
+		        97, 101, 103, 107, 109, 113 })
+                .mapToObj(BigInteger::valueOf)
+                .toArray(BigInteger[]::new);
+		
+		
+	    BigInteger result = BigInteger.ONE;
+	    for (char c : letters) {
+	    	System.out.println(c+"="+(int)c);
+	        if (c < 65) {
+	            return new BigInteger("-1");
+	        }
+	        int pos = /*(int)*/c - 65;
+	        result = result.multiply(bigPrimes[pos]);
+	    }
+	    return result;
+	}
 	
 	
 }
