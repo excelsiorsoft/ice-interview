@@ -23,7 +23,8 @@ public class AnagramFinder {
 
 		Map<String, Set<String>> preliminaries = new BufferedReader(text).lines()
 				.flatMap(Pattern.compile("\\W+")::splitAsStream).distinct().collect(Collectors.groupingBy(
-						s -> Stream.of(s.split("")).sorted().collect(Collectors.joining()), Collectors.toSet()));
+						s -> s.codePoints().sorted().collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString()
+						/*s -> Stream.of(s.split("")).sorted().collect(Collectors.joining())*/, Collectors.toSet()));
 
 		return preliminaries.values().stream().filter(list -> list.size() > 1).collect(Collectors.toList());
 	}
@@ -32,10 +33,16 @@ public class AnagramFinder {
 
 		Map<String, List<String>> preliminaries = new BufferedReader(text).lines()
 				.flatMap(Pattern.compile("\\W+")::splitAsStream).distinct()
-				.collect(Collectors.groupingBy(s -> Stream.of(s.split("")).sorted().collect(Collectors.joining())));
+				.collect(Collectors.groupingBy(/*s -> Stream.of(s.split("")).sorted().collect(Collectors.joining())*/
+						s -> s.codePoints().sorted().collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString()));
 
 		return preliminaries.values().stream().filter(list -> list.size() > 1)
 				.collect(Collectors.toMap(list -> list.get(0), list -> new TreeSet<>(list.subList(1, list.size()))));
+	}
+	
+	public void find(Reader text) {
+		
+		
 	}
 
 }
