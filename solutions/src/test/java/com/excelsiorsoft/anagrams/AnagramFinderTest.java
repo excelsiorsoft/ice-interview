@@ -8,11 +8,16 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Test;
+
+import com.excelsiorsoft.anagrams.AnagramFinder.Word;
 
 public class AnagramFinderTest {
 	
@@ -97,7 +102,7 @@ public class AnagramFinderTest {
 	@Test
 	public void test8() {
 		
-		System.out.println( calculateProduct("Pneumonoultramicroscopicsilicovolcanoconiosis".toUpperCase().toCharArray()) );
+		System.out.println( calculateProduct(capitalize("Pneumonoultramicroscopicsilicovolcanoconiosis")) );
 	}
 	
 	@Test public void test9() {
@@ -117,6 +122,8 @@ public class AnagramFinderTest {
 		        37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103,
 		        107, 109, 113 };*/
 		
+		int OFFSET = 65;
+		
 		BigInteger[] bigPrimes = Arrays.stream(
 				new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31,
 		        37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
@@ -128,14 +135,25 @@ public class AnagramFinderTest {
 	    BigInteger result = BigInteger.ONE;
 	    for (char c : letters) {
 	    	System.out.println(c+"="+(int)c);
-	        if (c < 65) {
+	        if (c < OFFSET) {
 	            return new BigInteger("-1");
 	        }
-	        int pos = /*(int)*/c - 65;
+	        int pos = /*(int)*/c - OFFSET;
 	        result = result.multiply(bigPrimes[pos]);
 	    }
 	    return result;
 	}
 	
+	@Test
+	public void test10() {
+		//String text = "salt last one orchestra  eon plod barc \ncrab carthorse";
+		
+		String text = "abc cab tat aaa orchestra\natt tat bbb\ntta\ncabr\nrbac cab crab cabrc cabr carthorse";
+		/*Map<BigInteger, List<Word>>  result = AnagramFinder.find(new StringReader(text));
+		result.entrySet().stream().forEach(System.out::println);*/
+		
+		AnagramFinder.find(new StringReader(text));
+		System.out.println("----------------------");
+	}
 	
 }
